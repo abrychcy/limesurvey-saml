@@ -52,12 +52,6 @@ class StuRaSAML extends AuthPluginBase
             'label' => 'SAML attribute used as groups',
             'default' => 'groups',
         ),
-	'saml_permission_mapping'=>array(
-            'type'=>'json',
-            'label'=>'SAML group attribute to perimission mapping',
-            'editorOptions'=>array('mode'=>'tree'),
-            'default'=>'{"default":{"create_labelsets":false,"create_participant_panel":false,"create_settings_plugins":false,"create_surveys":false}}',
-        ),
         'authtype_base' => array(
             'type' => 'string',
             'label' => 'Authtype base',
@@ -97,7 +91,7 @@ class StuRaSAML extends AuthPluginBase
     protected function get_saml_instance() {
         if ($this->ssp == null) {
 
-            $simplesamlphp_path = $this->get('simplesamlphp_path', null, null, '/var/www/simplesamlphp');
+            $simplesamlphp_path = $this->get('simplesamlphp_path', null, null, '/var/www/tu-ilmenau.de/helfer.stura/simplesamlphp');
 
             // To avoid __autoload conflicts, remove limesurvey autoloads temporarily 
             $autoload_functions = spl_autoload_functions();
@@ -107,7 +101,7 @@ class StuRaSAML extends AuthPluginBase
 
             require_once($simplesamlphp_path.'/lib/_autoload.php');
 
-            $saml_authsource = $this->get('saml_authsource', null, null, 'limesurvey');
+            $saml_authsource = $this->get('saml_authsource', null, null, 'wayfinder');
             $this->ssp = new SimpleSAML_Auth_Simple($saml_authsource);
 
             // To avoid __autoload conflicts, restote the limesurvey autoloads
@@ -166,7 +160,7 @@ class StuRaSAML extends AuthPluginBase
             $ssp = $this->get_saml_instance();
             $attributes = $this->ssp->getAttributes();
             if (!empty($attributes)) {
-                $saml_uid_mapping = $this->get('saml_uid_mapping', null, null, 'uid');
+                $saml_uid_mapping = $this->get('saml_uid_mapping', null, null, 'eduPersonPrincipalName');
                 if (array_key_exists($saml_uid_mapping , $attributes) && !empty($attributes[$saml_uid_mapping])) {
                     $username = $attributes[$saml_uid_mapping][0];
                     $this->setUsername($username);
@@ -184,7 +178,7 @@ class StuRaSAML extends AuthPluginBase
         $attributes = $this->ssp->getAttributes();
 
         if (!empty($attributes)) {
-            $saml_name_mapping = $this->get('saml_name_mapping', null, null, 'cn');
+            $saml_name_mapping = $this->get('saml_name_mapping', null, null, 'displayName');
             if (array_key_exists($saml_name_mapping , $attributes) && !empty($attributes[$saml_name_mapping])) {
                 $name = $attributes[$saml_name_mapping][0];
             }
