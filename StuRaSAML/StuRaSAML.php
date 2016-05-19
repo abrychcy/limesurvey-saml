@@ -23,27 +23,38 @@ class StuRaSAML extends AuthPluginBase
         'simplesamlphp_path' => array(
             'type' => 'string',
             'label' => 'Path to the SimpleSAMLphp folder',
-            'default' => '/var/www/simplesamlphp',
+            'default' => '/var/www/tu-ilmenau.de/helfer.stura/simplesamlphp',
         ),
         'saml_authsource' => array(
             'type' => 'string',
             'label' => 'SAML authentication source',
-            'default' => 'limesurvey',
+            'default' => 'wayfinder',
         ),
         'saml_uid_mapping' => array(
             'type' => 'string',
-            'label' => 'SAML attributed used as username',
-            'default' => 'uid',
+            'label' => 'SAML attribute used as username',
+            'default' => 'eduPersonPrincipalName',
         ),
         'saml_mail_mapping' => array(
             'type' => 'string',
-            'label' => 'SAML attributed used as email',
+            'label' => 'SAML attribute used as email',
             'default' => 'mail',
         ),
         'saml_name_mapping' => array(
             'type' => 'string',
-            'label' => 'SAML attributed used as name',
-            'default' => 'cn',
+            'label' => 'SAML attribute used as name',
+            'default' => 'displayName',
+        ),
+		'saml_groups_mapping' => array(
+            'type' => 'string',
+            'label' => 'SAML attribute used as groups',
+            'default' => 'groups',
+        ),
+		'saml_permission_mapping'=>array(
+            'type'=>'json',
+            'label'=>'SAML group attribute to perimission mapping',
+            'editorOptions'=>array('mode'=>'tree'),
+            'default'=>'{"default":{"create_labelsets":false,"create_participant_panel":false,"create_settings_plugins":false,"create_surveys":false}}',
         ),
         'authtype_base' => array(
             'type' => 'string',
@@ -63,6 +74,16 @@ class StuRaSAML extends AuthPluginBase
         'auto_update_users' => array(
             'type' => 'checkbox',
             'label' => 'Auto update users',
+            'default' => true,
+        ),
+		'auto_create_groups' => array(
+            'type' => 'checkbox',
+            'label' => 'Auto create groups',
+            'default' => true,
+        ),
+		'auto_update_groups' => array(
+            'type' => 'checkbox',
+            'label' => 'Auto update groups',
             'default' => true,
         ),
         'force_saml_login' => array(
