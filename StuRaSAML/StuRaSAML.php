@@ -149,7 +149,7 @@ class StuRaSAML extends AuthPluginBase
     public function afterLogout()
     {
         $ssp = $this->get_saml_instance();
-        $ssp->logout();
+        $ssp->logout(array('ReturnTo' => Yii::app()->getConfig('homeurl')));
     }
 
     public function newLoginForm()
