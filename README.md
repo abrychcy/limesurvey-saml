@@ -1,4 +1,4 @@
-limesurvey-saml  (version 0.1)
+limesurvey-saml  (version 0.2)
 ==============================
 
 SAML Authentication plugin for limesurvey (based on simpleSAMLphp)
