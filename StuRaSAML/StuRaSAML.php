@@ -221,6 +221,20 @@ class StuRaSAML extends AuthPluginBase
         return $groups;
     }
 	
+	public function getLSUserGroups($uid)
+	{
+		$lsgroups = '';
+		
+		$qGroup = Yii::app()->db->createCommand();
+		$qGroup->select(array('groups.name', 'groups.ugid'));
+		$qGroup->from("{{user_in_groups}} AS useringroups");
+		$qGroup->where('useringroups.uid='.$uid);
+		$qGroup->join("{{user_groups}} AS groups", 'groups.ugid=useringroups.ugid');
+		$lsgroups = $qGroup->queryAll();
+		
+		return $lsgroups;
+	}
+	
     public function newUserSession()
     {
         $ssp = $this->get_saml_instance();
@@ -303,12 +317,7 @@ class StuRaSAML extends AuthPluginBase
                 if ($auto_update_groups) {
 					
 					// Get current Group membership in LimeSurvey
-					$qGroup = Yii::app()->db->createCommand();
-					$qGroup->select(array('groups.name', 'groups.ugid'));
-					$qGroup->from("{{user_in_groups}} AS useringroups");
-					$qGroup->where('useringroups.uid='.$oUser->uid);
-					$qGroup->join("{{user_groups}} AS groups", 'groups.ugid=useringroups.ugid');
-					$user_in_current_groups = $qGroup->queryAll();
+					$user_in_current_groups = $this->getLSUserGroups($oUser->uid);
 
 					// Reorder Queryarray
 					$cGroups = array();
