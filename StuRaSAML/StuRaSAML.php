@@ -10,14 +10,14 @@
  * other free or open source software licenses.
  */
 
-class AuthSAML extends AuthPluginBase
+class StuRaSAML extends AuthPluginBase
 {
     protected $storage = 'DbStorage';
 
     protected $ssp = null;
     
-    static protected $description = 'SAML authentication plugin';
-    static protected $name = 'SAML';
+    static protected $description = 'StuRa simpleSAML authentication plugin';
+    static protected $name = 'StuRa sGIS SAML';
     
     protected $settings = array(
         'simplesamlphp_path' => array(
