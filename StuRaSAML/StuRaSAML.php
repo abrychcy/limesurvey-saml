@@ -206,6 +206,21 @@ class StuRaSAML extends AuthPluginBase
         return $mail;
     }
 
+	public function getUserGroups()
+    {
+        $groups = '';
+
+        $ssp = $this->get_saml_instance();
+        $attributes = $this->ssp->getAttributes();
+        if (!empty($attributes)) {
+            $saml_groups_mapping = $this->get('saml_groups_mapping', null, null, 'groups');
+            if (array_key_exists($saml_groups_mapping , $attributes) && !empty($attributes[$saml_groups_mapping])) {
+                $groups = $attributes[$saml_groups_mapping];
+            }
+        }
+        return $groups;
+    }
+	
     public function newUserSession()
     {
         $ssp = $this->get_saml_instance();
