@@ -51,7 +51,7 @@ This plugin requires a [simpleSAMLphp instance configured as an SP](http://simpl
 If your SP is ready, you will be able to enable your SAML plugin in order to add SAML support to your Limesurvey instance.
 
 
-Copy the AuthSAML folder inside the folder plugins
+Copy the StuRaSAML folder inside the folder plugins
 
 Access to the Limesurvey platform, enable the SAML plugin and configure the following parameters:
 
